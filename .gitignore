@@ -1,0 +1,19 @@
+# 打包上傳用的資料夾（每次重新產生，不需要版控）
+netlify_deploy/
+
+# 改動前的備份檔（只在本機留著，不上傳）
+*.before-*.js
+*.before-*.html
+models/*.before-*.glb
+models/*.before-*.js
+
+# 舊版／沒用到的地圖模型
+models/*.procedural-expansion.*
+models/fixed_mine_map.glb
+
+# 美術原始檔與工具（遊戲本身用不到）
+*.blend
+*.blend1
+*.psd
+assets/models/pickaxes/rebuild_pickaxes.py
+assets/models/pickaxes/pickaxes_preview.png
