@@ -4,7 +4,7 @@
    用法：
      L('中文', 'English')   → 依目前語言回傳其中一個字串
      網址加 ?lang=en 或 ?lang=zh 可直接指定語言（會被記住）
-     index_en.html 會轉到 index.html?lang=en
+     index.html 是選語言的入口頁；index_en.html 直接開英文版
    HTML 裡的固定文字：在元素上加 data-en="English text"
    （或 data-en-aria-label、data-en-title），L.applyDom() 會換掉。
    這個檔案必須比其他遊戲腳本更早載入。

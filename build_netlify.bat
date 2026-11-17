@@ -23,6 +23,7 @@ mkdir "%OUT%"
 
 REM --- page and scripts ---
 copy /y index.html      "%OUT%\" >nul
+copy /y game.html       "%OUT%\" >nul
 copy /y index_en.html   "%OUT%\" >nul
 copy /y i18n.js         "%OUT%\" >nul
 copy /y polish.js       "%OUT%\" >nul
