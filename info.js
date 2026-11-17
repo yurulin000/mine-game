@@ -49,10 +49,10 @@ const oreRows = ORES.map(o => `<tr>
   <td><span class="dot" style="background:${hex(o.color)}"></span>${o.name}</td>
   <td>×${o.varMax}</td>
   <td>${PICKS[o.needPick].name}</td>
-  <td>${o.hits} 下</td></tr>`).join('');
+  <td>${o.hits}${L(' 下', ' hits')}</td></tr>`).join('');
 
 const pickRows = PICKS.map((pk, i) => `<tr>
-  <td>${pk.name}</td><td>${money(pk.price)}</td><td>${pk.speed} 倍</td>
+  <td>${pk.name}</td><td>${money(pk.price)}</td><td>${pk.speed}${L(' 倍', '×')}</td>
   ${ORES.map(o => {
     const n = hitsNeeded(o, i);
     return `<td class="${n === o.hits ? 'easy' : ''}">${n}</td>`;
@@ -65,10 +65,16 @@ const jackRows = PICKS.map((pk, i) => `<tr>
   <td>${Math.round((1 - C.JACK_SHARE[i]) * 100)}%</td></tr>`).join('');
 
 const unlockList = PICKS.map(pk => pk.unlockAt
-  ? `<li><b>${pk.name}</b>：累積挖到 <b>${pk.unlockAt}</b> 顆礦自動解鎖</li>`
-  : `<li><b>${pk.name}</b>：一開始就有</li>`).join('');
+  ? L(`<li><b>${pk.name}</b>：累積挖到 <b>${pk.unlockAt}</b> 顆礦自動解鎖</li>`,
+      `<li><b>${pk.name}</b>: unlocks automatically after mining <b>${pk.unlockAt}</b> ores</li>`)
+  : L(`<li><b>${pk.name}</b>：一開始就有</li>`,
+      `<li><b>${pk.name}</b>: yours from the start</li>`)).join('');
 
-const html = `
+/* 礦石欄位標題：中文取第一個字，英文用彩色圓點（英文名太長塞不下） */
+const oreHeads = ORES.map(o => L(`<th>${o.name.slice(0, 1)}</th>`,
+  `<th><span class="dot" style="background:${hex(o.color)};margin:0" title="${o.name}"></span></th>`)).join('');
+
+const htmlZh = `
 <div id="infoClose">✕</div>
 <h2>玩 法 介 紹</h2>
 <div class="sub">帶著十字鎬下礦坑，把礦石換成錢。</div>
@@ -108,7 +114,7 @@ const html = `
   ${jackRows}
 </table>
 <table>
-  <tr><th>十字鎬</th><th>價格</th><th>揮速</th>${ORES.map(o => `<th>${o.name.slice(0, 1)}</th>`).join('')}</tr>
+  <tr><th>十字鎬</th><th>價格</th><th>揮速</th>${oreHeads}</tr>
   ${pickRows}
 </table>
 <div class="note">右邊四欄是挖那種礦要敲幾下，<span class="easy">綠色</span>代表順手。</div>
@@ -130,6 +136,70 @@ const html = `
   <li>錢不夠、背包也空了時，<b>礦工工會</b>會發 <b>${money(C.SUBSIDY)}</b> 讓你繼續。</li>
 </ul>
 `;
+
+const htmlEn = `
+<div id="infoClose">✕</div>
+<h2>HOW TO PLAY</h2>
+<div class="sub">Take your pickaxe into the mine and turn ore into cash.</div>
+
+<h3>1. Basics</h3>
+<ol>
+  <li>Tap the ground to walk. Next to an ore, press <b>MINE</b>.</li>
+  <li>Mined ore goes into your bag. Sell it at the <b>Shop</b>.</li>
+  <li>The more you mine, the better your pickaxe gets — upgrades are automatic.</li>
+</ol>
+
+<h3>2. Pickaxe = Your Bet</h3>
+<ul>
+  <li>Pickaxes are free and never break, but <b>every swing costs a mining fee</b> equal to the pickaxe's price.</li>
+  <li>You start with <b>${money(C.START_MONEY)}</b> and a Wooden Pickaxe. Tap the round button next to MINE to switch: pricey picks bet big, cheap picks play it safe.</li>
+  ${unlockList}
+</ul>
+
+<h3>3. Ores &amp; Multipliers</h3>
+<table>
+  <tr><th>Ore</th><th>Top prize</th><th>Best pick</th><th>Hits (best pick)</th></tr>
+  ${oreRows}
+</table>
+<ul>
+  <li><b>Sell price = pickaxe price × multiplier</b>. Above ×1 is profit; the minimum is ×${C.MULT_FLOOR}.</li>
+  <li>Most of the time you get a regular haul (up to ×${C.ORD_CEIL}); once in a while you hit a jackpot.</li>
+  <li class="note">In the long run you get back ${Math.round(C.PAYOUT_RTP * 100)}% of your bets — the same for all four pickaxes.</li>
+</ul>
+
+<h3>4. Pickaxe Tiers</h3>
+<ul>
+  <li>Any pickaxe can mine any ore; each tier below the best pick needs ${Math.round(C.EXTRA_HITS_PER_TIER * 100)}% more hits.</li>
+  <li><b>Higher tiers swing harder</b>: bigger, more frequent jackpots, but weaker regular hauls.</li>
+</ul>
+<table>
+  <tr><th>Pickaxe</th><th>Jackpot</th><th>Top prize</th><th>Regular</th></tr>
+  ${jackRows}
+</table>
+<table>
+  <tr><th>Pickaxe</th><th>Price</th><th>Speed</th>${oreHeads}</tr>
+  ${pickRows}
+</table>
+<div class="note">The colored columns show how many hits each ore takes; <span class="easy">green</span> means it's that pick's specialty.</div>
+
+<h3>5. Shop &amp; TURBO</h3>
+<ul>
+  <li>Walk up to the shop, or tap the <b>Shop</b> button at the bottom right. Sell ores one by one or all at once.</li>
+  <li>Turn on <b>⚡TURBO</b> (left of MINE) to sell ore on the spot instead of bagging it.</li>
+</ul>
+
+<h3>6. Respawns &amp; Camp</h3>
+<ul>
+  <li>There are always <b>${C.ACTIVE_ORES}</b> ores on the map. Each one you mine regrows elsewhere after ${C.RESPAWN_SEC} seconds.</li>
+  <li>There's a tent below the shop — press <b>SLEEP</b> to reroll every ore on the map.</li>
+</ul>
+
+<h3>7. Going Broke</h3>
+<ul>
+  <li>Out of money with an empty bag? The <b>Miners' Guild</b> will hand you <b>${money(C.SUBSIDY)}</b> to keep going.</li>
+</ul>
+`;
+const html = L(htmlZh, htmlEn);
 
 /* ---------- 視窗 ---------- */
 const stage = document.getElementById('stage') || document.body;
@@ -164,7 +234,7 @@ if (panel) {
   const btn = document.createElement('button');
   btn.id = 'infoBtn';
   btn.type = 'button';
-  btn.textContent = 'Info　玩法介紹';
+  btn.textContent = L('Info　玩法介紹', 'Info · How to Play');
   btn.addEventListener('click', e => { e.stopPropagation(); openInfo(); });
   panel.prepend(btn);
 }

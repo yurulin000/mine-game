@@ -684,7 +684,7 @@ requestAnimationFrame(step);
 
   const testTitle = document.createElement('div');
   testTitle.className = 'win-test-title';
-  testTitle.textContent = '大獎動畫測試';
+  testTitle.textContent = L('大獎動畫測試', 'Win animation test');
   const testRow = document.createElement('div');
   testRow.className = 'btnrow win-test-row';
   testRow.innerHTML = `<button id="testWin">WIN</button><button id="testBigWin">BIG</button>
@@ -697,11 +697,13 @@ requestAnimationFrame(step);
   // 挖到好礦的「礦脈」演出（WIN 是賣出時才播的，兩者分開測試）
   const oreTitle = document.createElement('div');
   oreTitle.className = 'win-test-title';
-  oreTitle.textContent = '礦脈動畫測試';
+  oreTitle.textContent = L('礦脈動畫測試', 'Vein animation test');
   const oreRow = document.createElement('div');
   oreRow.className = 'btnrow win-test-row';
-  oreRow.innerHTML = `<button id="testG1">精良</button><button id="testG2">稀有</button>
-                      <button id="testG3">史詩</button><button id="testG4">極品</button>`;
+  oreRow.innerHTML = L(`<button id="testG1">精良</button><button id="testG2">稀有</button>
+                      <button id="testG3">史詩</button><button id="testG4">極品</button>`,
+                      `<button id="testG1">Fine</button><button id="testG2">Rare</button>
+                      <button id="testG3">Epic</button><button id="testG4">Prime</button>`);
   testRow.after(oreTitle, oreRow);
   const grandSamples = [['testG1',3.2,1],['testG2',6.8,2],['testG3',14.5,3],['testG4',32,4]];
   grandSamples.forEach(([id, mult, oreIndex]) => {
@@ -724,7 +726,7 @@ G.player.traverse(o => {
   const win = document.getElementById('shopwin');
   const x = document.createElement('button');
   x.id = 'shopclose'; x.textContent = '✕';
-  x.type = 'button'; x.setAttribute('aria-label', '關閉商店');
+  x.type = 'button'; x.setAttribute('aria-label', L('關閉商店', 'Close shop'));
   x.onclick = () => MINING.closeShop();
   shop.appendChild(x);
   shop.addEventListener('pointerdown', e => {
@@ -737,7 +739,7 @@ G.player.traverse(o => {
   const gear = document.createElement('div');
   gear.id = 'gear';
   gear.innerHTML = '<i></i><i></i><i></i>';        // 三條線的漢堡圖示
-  gear.setAttribute('aria-label', '設定選單');
+  gear.setAttribute('aria-label', L('設定選單', 'Settings menu'));
   stage.appendChild(gear);
   gear.onclick = () => {
     const open = document.getElementById('panel').classList.toggle('open');
@@ -748,7 +750,7 @@ G.player.traverse(o => {
 /* 商店按鈕：在地圖任何地方都能直接打開商店 */
 {
   const btn = document.createElement('div');
-  btn.id = 'shopBtn'; btn.textContent = '商店';
+  btn.id = 'shopBtn'; btn.textContent = L('商店', 'SHOP');
   stage.appendChild(btn);
   btn.addEventListener('pointerdown', e => {
     e.stopPropagation();
@@ -765,7 +767,7 @@ G.player.traverse(o => {
   bar.id = 'actbar';
   bar.innerHTML =
     '<div id="pickBtn"><img id="pickBtnImg" src="images/pickaxe_wood.png" alt=""></div>' +
-    '<div id="mineBtn" class="act off"><span class="fill"></span><img class="minePick" src="images/pickaxe_wood.png" alt=""><span class="txt">開　採</span></div>' +
+    '<div id="mineBtn" class="act off"><span class="fill"></span><img class="minePick" src="images/pickaxe_wood.png" alt=""><span class="txt">' + L('開　採', 'MINE') + '</span></div>' +
     '<div id="turboBtn"><span class="bolt">⚡</span><span class="lbl">TURBO</span></div>';
   stage.appendChild(bar);
 
@@ -791,7 +793,7 @@ G.player.traverse(o => {
 
   const panel = document.createElement('div');
   panel.id = 'pickPanel';
-  panel.innerHTML = '<div class="ptitle">選擇十字鎬　＝　每次開採的下注金額</div><div id="pickList"></div>';
+  panel.innerHTML = '<div class="ptitle">' + L('選擇十字鎬　＝　每次開採的下注金額', 'Choose a pickaxe = your bet per swing') + '</div><div id="pickList"></div>';
   stage.appendChild(panel);
 
   const promptEl = document.getElementById('prompt');
@@ -834,15 +836,16 @@ G.player.traverse(o => {
   const bar = document.createElement('div');
   bar.id = 'betbar';
   bar.innerHTML =
-    '<div><span class="label">錢包</span><span class="v" id="walletVal">0</span></div>' +
+    '<div><span class="label">' + L('錢包', 'WALLET') + '</span><span class="v" id="walletVal">0</span></div>' +
     '<div><span class="label">BET</span><img id="betPickImg" src="images/pickaxe_wood.png" alt="">' +
-    '<span class="pk" id="betPick">木十字鎬</span><span class="v" id="betVal">$100</span></div>';
+    '<span class="pk" id="betPick">' + L('木十字鎬', 'Wooden Pickaxe') + '</span><span class="v" id="betVal">$100</span></div>';
   stage.appendChild(bar);
   if (window.MINING && MINING.refreshHUD) MINING.refreshHUD();   // 建好後立刻填入正確數字
 }
 
 /* 底下的說明改成滑鼠版 */
 const hint = document.getElementById('hint');
-if (hint) hint.innerHTML = '<b>點地面</b> 走過去　·　<b>點礦石</b> 自動開採　·　<b>點商店</b> 買賣';
+if (hint) hint.innerHTML = L('<b>點地面</b> 走過去　·　<b>點礦石</b> 自動開採　·　<b>點商店</b> 買賣',
+  '<b>Tap ground</b> to walk · <b>Tap ore</b> to mine · <b>Tap shop</b> to trade');
 
 })();

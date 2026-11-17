@@ -12,19 +12,19 @@
 
 // 四種礦石（由小到大、由便宜到貴）
 const ORE_TYPES = [
-  { key:'blue', name:'藍霧原礦', gemName:'藍霧寶石', color:0x168cff, glow:0x005bd6, size:0.56,
+  { key:'blue', name:L('藍霧原礦','Mist Ore'), gemName:L('藍霧寶石','Mist Gem'), color:0x168cff, glow:0x005bd6, size:0.56,
     rawImg:'images/raw_ore_01.png', gemImg:'images/polished_gem_01.png', aspect:1.20,
     polishCost:40, hits:3, varMax:2.5, needPick:0, weight:42 },
-  { key:'red', name:'赤焰原礦', gemName:'赤焰寶石', color:0xff382e, glow:0xd41414, size:0.68,
+  { key:'red', name:L('赤焰原礦','Ember Ore'), gemName:L('赤焰寶石','Ember Gem'), color:0xff382e, glow:0xd41414, size:0.68,
     rawImg:'images/raw_ore_02.png', gemImg:'images/polished_gem_02.png', aspect:1.28,
     polishCost:90, hits:4, varMax:5, needPick:1, weight:27 },
-  { key:'purple', name:'紫月原礦', gemName:'紫月寶石', color:0x922cff, glow:0x5d0bd4, size:0.82,
+  { key:'purple', name:L('紫月原礦','Moon Ore'), gemName:L('紫月寶石','Moon Gem'), color:0x922cff, glow:0x5d0bd4, size:0.82,
     rawImg:'images/raw_ore_03.png', gemImg:'images/polished_gem_03.png', aspect:1.03,
     polishCost:180, hits:5, varMax:12, needPick:2, weight:17 },
-  { key:'gold', name:'日耀原礦', gemName:'日耀寶石', color:0xffa614, glow:0xd96800, size:0.98,
+  { key:'gold', name:L('日耀原礦','Sun Ore'), gemName:L('日耀寶石','Sun Gem'), color:0xffa614, glow:0xd96800, size:0.98,
     rawImg:'images/raw_ore_04.png', gemImg:'images/polished_gem_04.png', aspect:1.05,
     polishCost:350, hits:6, varMax:25, needPick:3, weight:10 },
-  { key:'rainbow', name:'星虹原礦', gemName:'星虹寶石', color:0x12d8ff, glow:0x6b27ff, size:1.12,
+  { key:'rainbow', name:L('星虹原礦','Starbow Ore'), gemName:L('星虹寶石','Starbow Gem'), color:0x12d8ff, glow:0x6b27ff, size:1.12,
     rawImg:'images/raw_ore_05.png', gemImg:'images/polished_gem_05.png', aspect:1.08,
     polishCost:700, hits:8, varMax:45, needPick:3, weight:4 },
 ];
@@ -38,14 +38,14 @@ const ORE_TYPES = [
 
 // 四階十字鎬：剛好跟四種礦石一一對應
 const PICKS = [
-  { key:'wood',  name:'木十字鎬', price:100,  speed:1.0, unlockAt:0,  img:'images/pickaxe_wood.png',
-    desc:'什麼礦都能挖，但高級礦要敲很多下' },
-  { key:'stone', name:'石十字鎬', price:200,  speed:1.5, unlockAt:10, img:'images/pickaxe_stone.png',
-    desc:'敲赤焰原礦很順手　揮鎬速度 1.5 倍' },
-  { key:'iron',  name:'鐵十字鎬', price:400,  speed:2.2, unlockAt:30, img:'images/pickaxe_iron.png',
-    desc:'敲紫月原礦很順手　揮鎬速度 2.2 倍' },
-  { key:'gold',  name:'金十字鎬', price:800, speed:3.0, unlockAt:60, img:'images/pickaxe_gold.png',
-    desc:'敲日耀、星虹原礦很順手　揮鎬速度 3 倍' },
+  { key:'wood',  name:L('木十字鎬','Wooden Pickaxe'), price:100,  speed:1.0, unlockAt:0,  img:'images/pickaxe_wood.png',
+    desc:L('什麼礦都能挖，但高級礦要敲很多下','Mines anything, but rare ores take many hits') },
+  { key:'stone', name:L('石十字鎬','Stone Pickaxe'), price:200,  speed:1.5, unlockAt:10, img:'images/pickaxe_stone.png',
+    desc:L('敲赤焰原礦很順手　揮鎬速度 1.5 倍','Great on Ember Ore · 1.5× swing speed') },
+  { key:'iron',  name:L('鐵十字鎬','Iron Pickaxe'), price:400,  speed:2.2, unlockAt:30, img:'images/pickaxe_iron.png',
+    desc:L('敲紫月原礦很順手　揮鎬速度 2.2 倍','Great on Moon Ore · 2.2× swing speed') },
+  { key:'gold',  name:L('金十字鎬','Gold Pickaxe'), price:800, speed:3.0, unlockAt:60, img:'images/pickaxe_gold.png',
+    desc:L('敲日耀、星虹原礦很順手　揮鎬速度 3 倍','Great on Sun & Starbow Ore · 3× swing speed') },
 ];
 //  price    = 每挖一次要付的場地費，也就是這一次的下注金額
 //  unlockAt = 累積挖到幾顆礦之後自動解鎖（十字鎬不用買、不會消耗，靠挖礦升級）
@@ -238,10 +238,10 @@ const spawnPoints = [];
 // 避免手填座標落在視覺岩壁外或不可到達區域。
 const MINER_LAYOUT = [
   // 阿土固定在整張地圖下方的大礦區，靠左下側工作但不佔中央通道。
-  { name:'阿土', fixedX:-3.5, fixedZ:37.5, targetX:-3.5, targetZ:37.5,
+  { name:L('阿土','Dusty'), fixedX:-3.5, fixedZ:37.5, targetX:-3.5, targetZ:37.5,
     rot:0.0, fur:0x86563f, hat:0xd98d32, scarf:0x4fae9e, speed:1.00 },
-  { name:'米可', targetX: 8.0,  targetZ:-6.5,  rot:-1.15, fur:0x70483c, hat:0x4d8fc8, scarf:0xe58a9a, speed:1.12 },
-  { name:'賴瑞', targetX:-8.0,  targetZ:-22.0, rot: .72, fur:0xa16a47, hat:0xb76fc8, scarf:0xe1b64a, speed:.92 }
+  { name:L('米可','Miko'), targetX: 8.0,  targetZ:-6.5,  rot:-1.15, fur:0x70483c, hat:0x4d8fc8, scarf:0xe58a9a, speed:1.12 },
+  { name:L('賴瑞','Larry'), targetX:-8.0,  targetZ:-22.0, rot: .72, fur:0xa16a47, hat:0xb76fc8, scarf:0xe1b64a, speed:.92 }
 ];
 const chosenMinerPoints = [];
 const MINER_SPOTS = MINER_LAYOUT.map(spec => {
@@ -849,9 +849,9 @@ function refreshOres() {
       const c = document.createElement('canvas'); c.width = 300; c.height = 84;
       const ctx = c.getContext('2d');
       ctx.fillStyle = '#2a1c10'; ctx.fillRect(0, 0, 300, 84);
-      ctx.fillStyle = '#ffd79a'; ctx.font = 'bold 44px "Microsoft JhengHei"';
+      ctx.fillStyle = '#ffd79a'; ctx.font = L('bold 44px "Microsoft JhengHei"', 'bold 38px "Trebuchet MS", sans-serif');
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-      ctx.fillText('礦 石 商 會', 150, 46);
+      ctx.fillText(L('礦 石 商 會', 'ORE SHOP'), 150, 46);
       return new THREE.CanvasTexture(c);
     })(), transparent: true
   }));
@@ -1515,7 +1515,7 @@ function setTargetOre(ore) {
   oreTargetLabel.style.top = safeY.toFixed(1) + 'px';
 }
 
-const SHOP_MOLE_TIPS = [
+const SHOP_MOLE_TIPS = L([
   '背包裡的原礦，可以進商店直接賣掉換成錢喔！',
   '想試試手氣嗎？付費打磨有機會讓礦石賣得更高！',
   '越高級的原礦，打磨費越高，記得先看看錢包。',
@@ -1524,7 +1524,16 @@ const SHOP_MOLE_TIPS = [
   'TURBO 會把挖到的礦立刻賣掉，背包就不會塞滿。',
   '今天也挖得很棒！慢慢來，寶物就在前面。',
   '別灰心，每一鎬都有可能敲出大驚喜！'
-];
+], [
+  'Got raw ore in your bag? Bring it in and I\'ll turn it into cash!',
+  'Feeling lucky? A paid polish might make your ore sell for more!',
+  'The rarer the ore, the pricier the polish. Check your wallet first.',
+  'Sleep at the camp and a whole new batch of ore will grow in the mine!',
+  'Mine more ores to unlock faster pickaxes.',
+  'TURBO sells ore the moment you dig it up, so your bag never fills.',
+  'Great digging today! Take it slow — treasure is just ahead.',
+  'Don\'t give up — any swing could strike a big surprise!'
+]);
 const shopMoleTalk = document.createElement('div');
 shopMoleTalk.id = 'shopMoleTalk';
 (document.getElementById('stage') || document.body).appendChild(shopMoleTalk);
@@ -1553,7 +1562,7 @@ function updateShopMole(now) {
     let next = Math.floor(Math.random() * SHOP_MOLE_TIPS.length);
     if (next === shopMoleTipIndex) next = (next + 1) % SHOP_MOLE_TIPS.length;
     shopMoleTipIndex = next;
-    shopMoleTalk.innerHTML = `<span class="speaker">小礦掌櫃</span>${SHOP_MOLE_TIPS[next]}`;
+    shopMoleTalk.innerHTML = `<span class="speaker">${L('小礦掌櫃', 'Shopkeeper Pebble')}</span>${SHOP_MOLE_TIPS[next]}`;
     shopMoleNextTipAt = now + 11000;
     shopMoleTalkExpiresAt = now + 11000;
   }
@@ -1582,7 +1591,7 @@ function updateShopMole(now) {
   shopMoleTalk.style.top = rawY.toFixed(1) + 'px';
 }
 
-const WORKER_MOLE_LINES = [
+const WORKER_MOLE_LINES = L([
   [
     '高級礦真的很硬，每敲一下手都麻……不過賣價漂亮就值得啦！',
     '慢慢敲、站穩一點，十字鎬才不會反彈到自己的腳。',
@@ -1610,7 +1619,35 @@ const WORKER_MOLE_LINES = [
     '樓上的鄰居說半夜會聽到敲礦聲……奇怪，我明明有休假。',
     '累了就去營地睡一覺，硬撐只會把岩石看成寶石。'
   ]
-];
+], [
+  [
+    'Rare ore is SO hard — my hands go numb every hit… but a good price makes it worth it!',
+    'Swing slow and keep your footing, or the pickaxe bounces back at your toes.',
+    'The rock sounds crisp today. I bet there\'s a nice vein nearby.',
+    'Rice balls for lunch again. When I strike it rich, I\'m adding two braised eggs!',
+    'Just one more ore before I clock out… I say that every time.',
+    'The most reliable thing down here isn\'t luck — it\'s a well-polished pickaxe.',
+    'If you hear the walls creaking, take two steps back. Better safe than sorry.'
+  ],
+  [
+    'I heard Larry dug up a pile of Starbow Ore and bought an apartment in Xinyi District!',
+    'I want Starbow Ore too… I\'ll start by not digging up plain rocks today.',
+    'Moon Ore is gorgeous, but the polishing fee is gorgeous enough to make my wallet shake.',
+    'The shopkeeper says I have potential. Hopefully not potential for spending.',
+    'A bat was watching me work just now. Probably a guild inspector.',
+    'Mom sent three more boxes of sweet potatoes. Let\'s eat some on break!',
+    'The air is extra cool today. The lamps look even warmer.'
+  ],
+  [
+    'Ahem, the Xinyi place isn\'t THAT big… but you really can see Taipei 101 from the window.',
+    'Starbow Ore doesn\'t show up just because you want it. Dig long enough and you learn to live with luck.',
+    'Save some on the good days. Veins aren\'t generous every day.',
+    'Rare ore takes forever. My shoulders ache, but a great price still makes me grin.',
+    'I started with a Wooden Pickaxe too. A few more hits every day, and you level up.',
+    'My upstairs neighbor hears mining at midnight… weird, I was on vacation.',
+    'Tired? Go sleep at the camp. Push too hard and every rock starts looking like a gem.'
+  ]
+]);
 
 const workerMoleTalkStates = workerMoles.map((mole, index) => {
   const el = document.createElement('div');
@@ -1714,9 +1751,9 @@ oreReward.id = 'oreReward';
 oreReward.innerHTML = `<div class="rewardGlow"></div><div class="rewardRays"></div>
   <div class="rewardRays two"></div>
   <div class="rewardRing one"></div><div class="rewardRing two"></div>
-  <div class="rewardSparks"></div><img class="rewardOre" alt="獲得的原礦">
+  <div class="rewardSparks"></div><img class="rewardOre" alt="${L('獲得的原礦', 'Ore obtained')}">
   <div class="rewardBanner"></div><div class="rewardMult"></div>
-  <div class="rewardText">獲得原礦<b></b><span class="rewardTier"></span></div>`;
+  <div class="rewardText">${L('獲得原礦', 'You got')}<b></b><span class="rewardTier"></span></div>`;
 (document.getElementById('stage') || document.body).appendChild(oreReward);
 
 const screenTint = document.createElement('div');
@@ -1771,29 +1808,36 @@ winReward.innerHTML = `<div class="winShade"></div><div class="winBurst"></div>
 const shopEl = document.createElement('div');
 shopEl.id = 'shop';
 shopEl.innerHTML = `<div id="shopwin">
-  <h2>礦 石 商 會</h2>
+  ${L(`<h2>礦 石 商 會</h2>
   <div class="sub">把挖到的礦換成錢</div>
   <h3>背包</h3><div id="sellList"></div>
   <div class="hintline">· 倍率 <b>×1</b> 以上是賺，以下是賠<br>
   · 打磨每顆限一次，失敗不退費<br>
   · 挖滿一定數量，十字鎬自動升級</div>
-  <div class="foot"><button id="sellall">全部賣出</button><button id="closeshop">離開</button></div>
+  <div class="foot"><button id="sellall">全部賣出</button><button id="closeshop">離開</button></div>`,
+  `<h2>ORE SHOP</h2>
+  <div class="sub">Trade the ore you dug up for cash</div>
+  <h3>Bag</h3><div id="sellList"></div>
+  <div class="hintline">· Multiplier above <b>×1</b> is profit, below is a loss<br>
+  · Each ore can be polished once — no refunds<br>
+  · Mine enough ores and your pickaxe upgrades automatically</div>
+  <div class="foot"><button id="sellall">Sell All</button><button id="closeshop">Leave</button></div>`)}
 </div>`;
 document.body.appendChild(shopEl);
 
 const polishStage = document.createElement('div');
 polishStage.id = 'polishStage';
 polishStage.innerHTML = `<div id="polishCard">
-  <div class="polishEyebrow">GEM POLISHING</div><h2 id="polishTitle">打磨這顆原礦？</h2>
+  <div class="polishEyebrow">GEM POLISHING</div><h2 id="polishTitle">${L('打磨這顆原礦？', 'Polish this ore?')}</h2>
   <div id="polishMachine"><div class="polishGlow"></div><div class="polishRing"></div>
-    <img id="polishOreImage" alt="待打磨原礦"><div class="polishSweep"></div>
+    <img id="polishOreImage" alt="${L('待打磨原礦', 'Ore to polish')}"><div class="polishSweep"></div>
     <div class="polishStars"><i></i><i></i><i></i><i></i><i></i></div><div class="polishSparks"></div></div>
   <div id="polishMessage"></div><div id="polishValue"></div>
-  <div class="polishOdds"><div class="polishOdd"><b>22%</b>原價</div>
+  <div class="polishOdds"><div class="polishOdd"><b>22%</b>${L('原價', 'Same')}</div>
     <div class="polishOdd good"><b>66%</b>×1.25～2.10</div>
     <div class="polishOdd perfect"><b>12%</b>×2.20～3.50</div></div>
-  <div class="polishActions"><button id="polishCancel">取消</button>
-    <button id="polishConfirm">打磨</button><button id="polishCollect">收下</button></div>
+  <div class="polishActions"><button id="polishCancel">${L('取消', 'Cancel')}</button>
+    <button id="polishConfirm">${L('打磨', 'Polish')}</button><button id="polishCollect">${L('收下', 'Collect')}</button></div>
 </div>`;
 document.body.appendChild(polishStage);
 const polishSparks = polishStage.querySelector('.polishSparks');
@@ -1808,11 +1852,11 @@ for (let i = 0; i < 14; i++) {
 const brokeEl = document.createElement('div');
 brokeEl.id = 'broke';
 brokeEl.innerHTML = `<div id="brokewin">
-  <h2>礦 工 工 會</h2>
-  <p>又輸光啦？老礦工從抽屜數了幾張鈔票給你。</p>
+  <h2>${L('礦 工 工 會', 'MINERS\' GUILD')}</h2>
+  <p>${L('又輸光啦？老礦工從抽屜數了幾張鈔票給你。', 'Broke again? The old miner counts out a few bills from the drawer for you.')}</p>
   <div class="amt">＋$${SUBSIDY.toLocaleString('en-US')}</div>
   <div class="times" id="brokeTimes"></div>
-  <button id="brokeTake">收下</button>
+  <button id="brokeTake">${L('收下', 'Take it')}</button>
 </div>`;
 document.body.appendChild(brokeEl);
 
@@ -1828,7 +1872,7 @@ function nextUnlock() {
 function checkUnlock() {
   const i = PICKS.findIndex((pk, k) => P.mined === pk.unlockAt && pk.unlockAt > 0);
   if (i < 0) return -1;
-  setTimeout(() => showToast('⛏ 升級！解鎖 ' + PICKS[i].name, '#7ee08a'), 1300);
+  setTimeout(() => showToast(L('⛏ 升級！解鎖 ', '⛏ Upgrade! Unlocked ') + PICKS[i].name, '#7ee08a'), 1300);
   return i;
 }
 function cheapestBet() {
@@ -1843,8 +1887,9 @@ function checkBroke() {
   if (P.money >= cheapestBet() || !bagEmpty()) return;
   P.brokeOpen = true;
   document.getElementById('brokeTimes').textContent =
-    P.subsidyCount === 0 ? '這是第一次，工會不收你利息。'
-                         : '你已經領過 ' + P.subsidyCount + ' 次了。';
+    P.subsidyCount === 0 ? L('這是第一次，工會不收你利息。', 'First time\'s free — no interest from the guild.')
+                         : L('你已經領過 ' + P.subsidyCount + ' 次了。',
+                             'You\'ve taken this ' + P.subsidyCount + (P.subsidyCount === 1 ? ' time' : ' times') + ' already.');
   brokeEl.style.display = 'flex';
   G.keys = {};
 }
@@ -1855,7 +1900,7 @@ document.getElementById('brokeTake').onclick = () => {
   brokeEl.style.display = 'none';
   G.keys = {};
   refreshHUD();
-  showToast('工會補助 ＋$' + SUBSIDY.toLocaleString('en-US'), '#ffd44d');
+  showToast(L('工會補助 ＋$', 'Guild aid +$') + SUBSIDY.toLocaleString('en-US'), '#ffd44d');
 };
 
 function showToast(text, color) {
@@ -1956,13 +2001,13 @@ function resolvePolishOre(type, item) {
   if (!item || item.polished) return null;
   const roll = Math.random();
   let gain = 1;
-  let result = '打磨完成，但品質普通，售價維持不變';
+  let result = L('打磨完成，但品質普通，售價維持不變', 'Polished, but the quality is ordinary — price unchanged');
   if (roll >= .22 && roll < .88) {
     gain = 1.25 + Math.random() * .85;
-    result = '打磨成功，寶石價值提升';
+    result = L('打磨成功，寶石價值提升', 'Polish succeeded — the gem is worth more');
   } else if (roll >= .88) {
     gain = 2.2 + Math.random() * 1.3;
-    result = '完美打磨！寶石價值大幅提升';
+    result = L('完美打磨！寶石價值大幅提升', 'Perfect polish! The gem\'s value soared');
   }
   item.baseValue = item.baseValue || item.value;
   item.polished = true;
@@ -1990,38 +2035,39 @@ function openPolishDecision(type, item) {
   polishStage.style.setProperty('--polish', color);
   polishStage.className = 'confirm';
   polishStage.style.display = 'flex';
-  document.getElementById('polishTitle').textContent = '要打磨這顆原礦嗎？';
+  document.getElementById('polishTitle').textContent = L('要打磨這顆原礦嗎？', 'Polish this ore?');
   const image = document.getElementById('polishOreImage');
   image.src = type.rawImg; image.alt = type.name;
   document.getElementById('polishMessage').innerHTML =
-    `<strong>${type.name}</strong>你可以現在確定賣出，或再付一次費用挑戰更高價值。`;
+    `<strong>${type.name}</strong>` + L('你可以現在確定賣出，或再付一次費用挑戰更高價值。',
+      'Sell it as is, or pay a fee to try for a higher value.');
   document.getElementById('polishValue').innerHTML =
-    `目前可直接賣　<b>$${item.value.toLocaleString('en-US')}</b><br>` +
-    `打磨費　<b>−$${type.polishCost.toLocaleString('en-US')}</b>　每顆只能嘗試一次`;
+    L('目前可直接賣　', 'Sells now for ') + `<b>$${item.value.toLocaleString('en-US')}</b><br>` +
+    L('打磨費　', 'Polish fee ') + `<b>−$${type.polishCost.toLocaleString('en-US')}</b>` + L('　每顆只能嘗試一次', ' · one try per ore');
   document.getElementById('polishConfirm').disabled = false;
 }
 function startPolishing() {
   const job = pendingPolish;
   if (!job || P.polishing || job.item.polished || !P.bag[job.type.key].includes(job.item)) return;
   if (P.money < job.type.polishCost) {
-    document.getElementById('polishMessage').innerHTML = '<strong>錢不夠</strong>先賣出其他礦石，再回來挑戰打磨。';
+    document.getElementById('polishMessage').innerHTML = L('<strong>錢不夠</strong>先賣出其他礦石，再回來挑戰打磨。', '<strong>Not enough money</strong>Sell some other ore first, then come back to polish.');
     return;
   }
   P.money -= job.type.polishCost;
   P.polishing = true;
   polishStage.className = 'working';
   document.getElementById('polishConfirm').disabled = true;
-  document.getElementById('polishTitle').textContent = '正在打磨…';
-  document.getElementById('polishMessage').innerHTML = '<strong>固定原礦</strong>機器正在尋找最好的切割角度…';
+  document.getElementById('polishTitle').textContent = L('正在打磨…', 'Polishing…');
+  document.getElementById('polishMessage').innerHTML = L('<strong>固定原礦</strong>機器正在尋找最好的切割角度…', '<strong>Securing the ore</strong>The machine is finding the best cutting angle…');
   document.getElementById('polishValue').innerHTML =
-    `已支付打磨費　<b>−$${job.type.polishCost.toLocaleString('en-US')}</b><br>結果即將揭曉`;
+    L('已支付打磨費　', 'Polish fee paid ') + `<b>−$${job.type.polishCost.toLocaleString('en-US')}</b><br>` + L('結果即將揭曉', 'Results coming up…');
   refreshHUD(); renderShop();
   window.dispatchEvent(new CustomEvent('polish-start', { detail:{ type:job.type.key } }));
   polishTimers.push(setTimeout(() => {
-    document.getElementById('polishMessage').innerHTML = '<strong>切割晶面</strong>光線開始進入礦石內部…';
+    document.getElementById('polishMessage').innerHTML = L('<strong>切割晶面</strong>光線開始進入礦石內部…', '<strong>Cutting facets</strong>Light begins to pour into the stone…');
   }, 650));
   polishTimers.push(setTimeout(() => {
-    document.getElementById('polishMessage').innerHTML = '<strong>最後拋光</strong>會是普通、升值，還是完美寶石？';
+    document.getElementById('polishMessage').innerHTML = L('<strong>最後拋光</strong>會是普通、升值，還是完美寶石？', '<strong>Final buff</strong>Ordinary, upgraded, or a perfect gem?');
   }, 1320));
   polishTimers.push(setTimeout(() => polishStage.classList.add('revealSoon'), 1780));
   polishTimers.push(setTimeout(finishPolishing, 2250));
@@ -2038,24 +2084,25 @@ function finishPolishing() {
   document.getElementById('polishOreImage').src = job.type.gemImg;
   document.getElementById('polishOreImage').alt = job.type.gemName;
   document.getElementById('polishTitle').textContent =
-    tier === 'perfect' ? '完美打磨！' : (tier === 'success' ? '打磨成功！' : '普通品質');
+    tier === 'perfect' ? L('完美打磨！', 'Perfect Polish!') : (tier === 'success' ? L('打磨成功！', 'Polish Success!') : L('普通品質', 'Ordinary Quality'));
   document.getElementById('polishMessage').innerHTML = `<strong>${job.type.gemName}</strong>`;
   const delta = job.item.value - before;
   document.getElementById('polishValue').innerHTML =
     `$${before.toLocaleString('en-US')}　→　<b>$${job.item.value.toLocaleString('en-US')}</b><br>` +
-    `<span style="color:${delta > 0 ? '#7ee0a0' : '#aaa6a0'}">${delta > 0 ? `+$${delta.toLocaleString('en-US')}` : '沒有增加'}</span>`;
+    `<span style="color:${delta > 0 ? '#7ee0a0' : '#aaa6a0'}">${delta > 0 ? `+$${delta.toLocaleString('en-US')}` : L('沒有增加', 'No change')}</span>`;
   refreshHUD(); renderShop();
   window.dispatchEvent(new CustomEvent('polish-reveal', { detail:{ tier, gain } }));
 }
 
-const REWARD_TIERS = ['普通礦脈','精良礦脈','稀有礦脈','史詩礦脈','傳說礦脈'];
+const REWARD_TIERS = L(['普通礦脈','精良礦脈','稀有礦脈','史詩礦脈','傳說礦脈'],
+                       ['Common Vein','Fine Vein','Rare Vein','Epic Vein','Legendary Vein']);
 /* 挖到好礦時的加強版演出。門檻用「這次抽到的倍率」決定，
    倍率越高標題越大、停留越久。賣出時的 WIN 演出是另一套。 */
 const GRAND_GRADES = [
-  { min:2,  cls:'g1', word:'精 良 礦 脈', life:3600, size:1.10, tint:null },
-  { min:5,  cls:'g2', word:'稀 有 礦 脈', life:4200, size:1.22, tint:null },
-  { min:10, cls:'g3', word:'史 詩 礦 脈', life:4900, size:1.34, tint:'epic' },
-  { min:25, cls:'g4', word:'極 品 礦 脈', life:5600, size:1.48, tint:'ultra' },
+  { min:2,  cls:'g1', word:L('精 良 礦 脈', 'FINE VEIN'), life:3600, size:1.10, tint:null },
+  { min:5,  cls:'g2', word:L('稀 有 礦 脈', 'RARE VEIN'), life:4200, size:1.22, tint:null },
+  { min:10, cls:'g3', word:L('史 詩 礦 脈', 'EPIC VEIN'), life:4900, size:1.34, tint:'epic' },
+  { min:25, cls:'g4', word:L('極 品 礦 脈', 'PRIME VEIN'), life:5600, size:1.48, tint:'ultra' },
 ];
 function gradeForMult(mult) {
   let found = null;
@@ -2088,7 +2135,7 @@ function showOreReward(type, quantity = 1, mult = 0) {
   oreReward.style.setProperty('--ring2-opacity', (0.24 + rank * 0.075).toFixed(2));
   oreReward.querySelector('.rewardOre').src = type.rawImg;
   oreReward.querySelector('.rewardOre').alt = type.name;
-  oreReward.querySelector('.rewardText b').textContent = type.name + '　×' + quantity + ' 顆';
+  oreReward.querySelector('.rewardText b').textContent = type.name + '　×' + quantity + L(' 顆', '');
   oreReward.querySelector('.rewardTier').textContent = grand
     ? '✦'.repeat(rank + 1)                                   // 大標題已經寫了等級，這裡只留星星
     : '✦'.repeat(rank + 1) + '　' + REWARD_TIERS[rank];
@@ -2184,7 +2231,7 @@ const WIN_LEVELS = [
     panelImg:'images/ui_big_win_number_panel.png', color:'#72f5ff', color2:'#db62ff',
     particles:58, distance:295, life:5200, countMs:2100 },
 ];
-function showWinReward(mult, value, type, quantity = 1, label = '賣出') {
+function showWinReward(mult, value, type, quantity = 1, label = L('賣出', 'Sold')) {
   mountInStage(winReward);
   const levelIndex = mult >= 10 ? 2 : (mult >= 5 ? 1 : 0);
   const level = WIN_LEVELS[levelIndex];
@@ -2198,7 +2245,7 @@ function showWinReward(mult, value, type, quantity = 1, label = '賣出') {
   titleAsset.alt = level.title;
   winReward.querySelector('.winPanelAsset').src = level.panelImg;
   winReward.querySelector('.winMult').textContent =
-    '×' + mult.toFixed(2) + '　' + label + ' ' + quantity + ' 顆';
+    '×' + mult.toFixed(2) + '　' + label + ' ' + quantity + L(' 顆', '');
 
   const particles = winReward.querySelector('.winParticles');
   particles.innerHTML = '';
@@ -2280,23 +2327,23 @@ function renderShop() {
         const img = polished ? x.t.gemImg : x.t.rawImg;
         const name = polished ? x.t.gemName : x.t.name;
         const state = polished
-          ? `<span class="orestate polishgain">已打磨 ×${(x.it.polishGain || 1).toFixed(2)}</span>`
-          : `<span class="orestate">打磨 $${x.t.polishCost.toLocaleString('en-US')}</span>`;
+          ? `<span class="orestate polishgain">${L('已打磨', 'Polished')} ×${(x.it.polishGain || 1).toFixed(2)}</span>`
+          : `<span class="orestate">${L('打磨', 'Polish')} $${x.t.polishCost.toLocaleString('en-US')}</span>`;
         const canPolish = P.money >= x.t.polishCost ? '' : 'disabled';
         return `<div class="row${polished ? ' polished' : ''}">
           <img class="oreimg" src="${img}" alt="${name}">
           <span class="nm">${name}${state}</span>
           <span class="num" style="color:${win ? '#7ee08a' : '#ff8a7a'}">×${x.it.mult.toFixed(2)}</span>
-          <span class="val">${x.it.value.toLocaleString('en-US')} 元</span>
+          <span class="val">${L(`${x.it.value.toLocaleString('en-US')} 元`, `$${x.it.value.toLocaleString('en-US')}`)}</span>
           <span class="actions">
-            ${polished ? '' : `<button class="polishbtn" data-polish="${x.t.key}" data-idx="${x.i}" ${canPolish}>打磨 $${x.t.polishCost}</button>`}
-            <button class="sellbtn" data-sell="${x.t.key}" data-idx="${x.i}">賣出</button>
+            ${polished ? '' : `<button class="polishbtn" data-polish="${x.t.key}" data-idx="${x.i}" ${canPolish}>${L('打磨', 'Polish')} $${x.t.polishCost}</button>`}
+            <button class="sellbtn" data-sell="${x.t.key}" data-idx="${x.i}">${L('賣出', 'Sell')}</button>
           </span>
         </div>`;
       }).join('')
-      + (items.length > MAX_ROWS ? `<div class="hintline">…還有 ${items.length - MAX_ROWS} 顆</div>` : '')
-      + `<div class="hintline">總值　<b style="color:#ffd44d">$${total.toLocaleString('en-US')}</b></div>`
-    : '<div class="hintline">背包是空的</div>';
+      + (items.length > MAX_ROWS ? `<div class="hintline">${L(`…還有 ${items.length - MAX_ROWS} 顆`, `…and ${items.length - MAX_ROWS} more`)}</div>` : '')
+      + `<div class="hintline">${L('總值　', 'Total ')}<b style="color:#ffd44d">$${total.toLocaleString('en-US')}</b></div>`
+    : `<div class="hintline">${L('背包是空的', 'Your bag is empty')}</div>`;
 
 
 }
@@ -2322,7 +2369,7 @@ shopEl.addEventListener('click', e => {
     if (got) animateMoneyToWallet(sourceRect, visualStart, P.money, 5 + Math.min(7, soldCount));
     // 這一批整體賺兩倍以上才值得放煙火
     const batchMult = paid > 0 ? got / paid : 0;
-    if (got && batchMult >= 2) showWinReward(batchMult, got, bestType, soldCount, '賣出');
+    if (got && batchMult >= 2) showWinReward(batchMult, got, bestType, soldCount, L('賣出', 'Sold'));
     return;
   }
   if (b.dataset.sell) {
@@ -2339,7 +2386,7 @@ shopEl.addEventListener('click', e => {
       animateMoneyToWallet(sourceRect, visualStart, P.money, 5);
       // 打磨過的礦價值會變，所以用「實拿 ÷ 當初下注」算真正的倍率
       const realMult = it.bet > 0 ? it.value / it.bet : it.mult;
-      if (realMult >= 2) showWinReward(realMult, it.value, t, 1, '賣出');
+      if (realMult >= 2) showWinReward(realMult, it.value, t, 1, L('賣出', 'Sold'));
       return;
     }
     refreshHUD(); renderShop(); return;
@@ -2379,7 +2426,7 @@ window.MINING.CONFIG = { START_MONEY, PAYOUT_RTP, ORD_CEIL, JACK_SHARE, JACK_RAT
 window.MINING.setTurbo = on => {
   P.turbo = !!on;
   try { localStorage.setItem('mole-mine-turbo', P.turbo ? '1' : '0'); } catch (_) {}
-  showToast(P.turbo ? '⚡ TURBO 開：當場賣掉' : 'TURBO 關：放進背包',
+  showToast(P.turbo ? L('⚡ TURBO 開：當場賣掉', '⚡ TURBO ON: sell on the spot') : L('TURBO 關：放進背包', 'TURBO OFF: ore goes to your bag'),
             P.turbo ? '#ffd44d' : '#c9c2b2');
   return P.turbo;
 };
@@ -2418,7 +2465,7 @@ function setAction(mode, label, progress) {
     _btnTxt.textContent = mode === 'busy' ? '' : label;
     if (_btnPick) {
       _btnPick.src = PICKS[P.pick].img;
-      _btnPick.alt = mode === 'busy' ? PICKS[P.pick].name + '開採中' : '';
+      _btnPick.alt = mode === 'busy' ? PICKS[P.pick].name + L('開採中', ' — mining') : '';
     }
     _btn.style.setProperty('--mine-swing', Math.max(.25, SWING_SEC / PICKS[P.pick].speed).toFixed(2) + 's');
     _lastSig = sig;
@@ -2447,12 +2494,12 @@ function renderPickList() {
   if (!el) return;
   el.innerHTML = PICKS.map((pk, i) => {
     const on = unlocked(i), eq = P.pick === i;
-    const left = on ? '' : (pk.unlockAt - P.mined) + ' 顆';
+    const left = on ? '' : (pk.unlockAt - P.mined) + L(' 顆', ' ores');
     return `<div class="prow${eq ? ' eq' : ''}${on ? '' : ' lock'}"${on ? ` data-pick="${i}"` : ''}>
       <img src="${pk.img}" alt="">
-      <span class="pn">${pk.name}${on ? '' : `　<span style="color:#ff8a7a;font-size:11px">還差 ${left}</span>`}</span>
+      <span class="pn">${pk.name}${on ? '' : `　<span style="color:#ff8a7a;font-size:11px">${L('還差 ', 'need ')}${left}</span>`}</span>
       <span class="pv">$${pk.price.toLocaleString('en-US')}</span>
-      <span class="ps">${eq ? '使用中' : (on ? '' : '未解鎖')}</span>
+      <span class="ps">${eq ? L('使用中', 'In use') : (on ? '' : L('未解鎖', 'Locked'))}</span>
     </div>`;
   }).join('');
 }
@@ -2513,7 +2560,7 @@ function loop(now) {
     P.mining = null; P.progress = 0; P.mineRequested = false;
     prompt.style.display = 'none';
     setTargetOre(null);
-    setAction('shop', '商　店', 0);
+    setAction('shop', L('商　店', 'SHOP'), 0);
     if (G.keys['KeyE'] || P.autoAct) { G.keys['KeyE'] = false; P.autoAct = false; openShop(); }
     return;
   }
@@ -2524,9 +2571,9 @@ function loop(now) {
     setTargetOre(null);
     prompt.style.display = 'block';
     document.getElementById('ptext').innerHTML =
-      '<span style="color:#c6d1ff">營地</span>　' +
-      '<span style="color:#9a9384">睡一覺，礦坑會重新長出一批礦石</span>';
-    setAction('sleep', '睡　覺', 0);
+      '<span style="color:#c6d1ff">' + L('營地', 'Camp') + '</span>　' +
+      '<span style="color:#9a9384">' + L('睡一覺，礦坑會重新長出一批礦石', 'Sleep here and a new batch of ore will grow') + '</span>';
+    setAction('sleep', L('睡　覺', 'SLEEP'), 0);
     return;
   }
 
@@ -2541,7 +2588,7 @@ function loop(now) {
     prompt.style.display = 'none';
     setTargetOre(null);
     P.mining = null; P.progress = 0; P.mineRequested = false;
-    setAction('off', '開　採', 0);
+    setAction('off', L('開　採', 'MINE'), 0);
     return;
   }
 
@@ -2554,11 +2601,12 @@ function loop(now) {
   /* --- 錢不夠付場地費 --- */
   if (P.money < pick.price) {
     prompt.style.display = 'block';
-    ptext.innerHTML = `<b style="color:#ff9a7a">錢不夠</b>` +
-      `<br><span style="color:#7f7a6c">開採一次要 $${pick.price.toLocaleString('en-US')}，` +
-      `回商店賣礦石，或換便宜一點的十字鎬</span>`;
+    ptext.innerHTML = `<b style="color:#ff9a7a">${L('錢不夠', 'Not enough money')}</b>` +
+      `<br><span style="color:#7f7a6c">` + L(`開採一次要 $${pick.price.toLocaleString('en-US')}，` +
+      `回商店賣礦石，或換便宜一點的十字鎬`, `Each swing costs $${pick.price.toLocaleString('en-US')}. ` +
+      `Sell ore at the shop, or switch to a cheaper pickaxe`) + `</span>`;
     P.mining = null; P.progress = 0; P.mineRequested = false;
-    setAction('off', '錢不夠', 0);
+    setAction('off', L('錢不夠', 'NO CASH'), 0);
     return;
   }
 
@@ -2601,7 +2649,7 @@ function loop(now) {
       // 挖到礦時播「礦脈」演出；WIN 留到賣出的時候才播。
       // TURBO 等於當場賣掉，所以 TURBO 開著時直接播 WIN。
       let collectRewardToken = 0;
-      if (P.turbo && mult >= 2) showWinReward(mult, value, near.type, yieldCount, '賣出');
+      if (P.turbo && mult >= 2) showWinReward(mult, value, near.type, yieldCount, L('賣出', 'Sold'));
       else collectRewardToken = showOreReward(near.type, yieldCount, mult);
 
       if (P.turbo) {
@@ -2632,14 +2680,14 @@ function loop(now) {
       P.mineRequested = false; P.autoAct = false;
       refreshHUD();
       prompt.style.display = 'none';
-      setAction('off', '開　採', 0);
+      setAction('off', L('開　採', 'MINE'), 0);
       return;
     }
     setAction('busy', '', P.progress);
   } else {
     P.mining = null; P.progress = 0; P.swingPhase = 0; P.miningHitCount = 0;
     near.mesh.position.set(near.x, near.mesh.position.y, near.z);
-    setAction('ready', '開　採', 0);
+    setAction('ready', L('開　採', 'MINE'), 0);
   }
 }
 

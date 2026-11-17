@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>礦坑原型</title>
+<script src="i18n.js?v=en-20261117"></script>
+<script>if (L.isEn) document.title = 'Shimmering Mine';</script>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
   html, body { width:100%; height:100%; overflow:hidden; background:#07070a; }
@@ -84,14 +86,15 @@
 <div id="loading" role="status" aria-live="polite">
   <div class="loading-card">
     <div class="loading-gem" aria-hidden="true">💎</div>
-    <div class="loading-title">進入礦坑</div>
-    <div class="loading-subtitle">正在準備今天的尋寶旅程…</div>
-    <div class="loading-track" role="progressbar" aria-label="遊戲載入進度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="loading-fill" class="loading-fill"></div></div>
-    <div class="loading-readout"><span id="loading-message">整理礦坑地圖中</span><span id="loading-percent">0%</span></div>
-    <button id="loading-retry" type="button" onclick="location.reload()">重新載入</button>
+    <div class="loading-title" data-en="Entering the Mine">進入礦坑</div>
+    <div class="loading-subtitle" data-en="Getting today's treasure hunt ready…">正在準備今天的尋寶旅程…</div>
+    <div class="loading-track" role="progressbar" aria-label="遊戲載入進度" data-en-aria-label="Game loading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="loading-fill" class="loading-fill"></div></div>
+    <div class="loading-readout"><span id="loading-message" data-en="Mapping the mine">整理礦坑地圖中</span><span id="loading-percent">0%</span></div>
+    <button id="loading-retry" type="button" onclick="location.reload()" data-en="Reload">重新載入</button>
   </div>
 </div>
 <script>
+L.applyDom(document.getElementById('loading'));
 // 只把進度算在進入遊戲前實際需要的地圖、十字鎬與介面圖片上。
 window.mineLoading = (() => {
   const box = document.getElementById('loading');
@@ -110,8 +113,8 @@ window.mineLoading = (() => {
     const ready = mapReady && toolsDone===4 && imagesDone===images.length && frameReady;
     const value = ready ? 100 : Math.min(99, Math.round((mapRatio*.65 + toolsDone*.05 + imagesDone/images.length*.15)*100));
     fill.style.width = value+'%'; percent.textContent = value+'%'; track.setAttribute('aria-valuenow',value);
-    message.textContent = !mapReady ? '整理礦坑地圖中' : toolsDone<4 ? '準備採礦工具中' : imagesDone<images.length ? '擦亮寶石與介面中' : '即將出發…';
-    if (ready) { hidden=true; message.textContent='準備完成！'; box.classList.add('is-done'); setTimeout(()=>box.remove(),600); }
+    message.textContent = !mapReady ? L('整理礦坑地圖中','Mapping the mine') : toolsDone<4 ? L('準備採礦工具中','Sharpening the pickaxes') : imagesDone<images.length ? L('擦亮寶石與介面中','Polishing gems and buttons') : L('即將出發…','Almost there…');
+    if (ready) { hidden=true; message.textContent=L('準備完成！','Ready!'); box.classList.add('is-done'); setTimeout(()=>box.remove(),600); }
   };
   images.forEach(name => {
     const img=new Image();
@@ -123,33 +126,35 @@ window.mineLoading = (() => {
     mapReady: () => { mapRatio=1; mapReady=true; update(); },
     toolDone: () => { toolsDone=Math.min(4,toolsDone+1); update(); },
     rendered: () => { if (!frameReady) { frameReady=true; update(); } },
-    mapFailed: () => { failed=true; message.textContent='地圖載入失敗，請檢查網路後重試'; document.getElementById('loading-retry').style.display='block'; }
+    mapFailed: () => { failed=true; message.textContent=L('地圖載入失敗，請檢查網路後重試','Map failed to load. Check your connection and try again.'); document.getElementById('loading-retry').style.display='block'; }
   };
 })();
 </script>
 
 <div id="title">
-  <h1>礦坑原型</h1>
-  <p>STEP 2 · 挖礦與商店</p>
+  <h1 data-en="Mine Prototype">礦坑原型</h1>
+  <p data-en="STEP 2 · Mining &amp; Shop">STEP 2 · 挖礦與商店</p>
 </div>
 
 <div id="info">
-  座標 <span id="pos">0, 0</span><br>
+  <span data-en="Pos">座標</span> <span id="pos">0, 0</span><br>
   FPS <span id="fps">--</span><br>
-  礦石 <span id="oreleft">0</span> 顆待挖
+  <span data-en="Ores left">礦石</span> <span id="oreleft">0</span> <span data-en="">顆待挖</span>
 </div>
 
 <div id="panel">
-  <button id="overview" style="background:#24354d;color:#ffe0ad;border:1px solid #65738a;border-radius:6px;padding:6px 10px;cursor:pointer">全景／跟隨</button>
-  <label>亮度 <input id="bright" type="range" min="40" max="200" value="100"></label>
-  <label>光暈 <input id="bloomAmt" type="range" min="0" max="200" value="100"></label>
+  <button id="overview" style="background:#24354d;color:#ffe0ad;border:1px solid #65738a;border-radius:6px;padding:6px 10px;cursor:pointer" data-en="Overview / Follow">全景／跟隨</button>
+  <label><span data-en="Brightness">亮度</span> <input id="bright" type="range" min="40" max="200" value="100"></label>
+  <label><span data-en="Glow">光暈</span> <input id="bloomAmt" type="range" min="0" max="200" value="100"></label>
 </div>
 
 <div id="mapbox"><canvas id="minimap" width="150" height="150"></canvas></div>
 
-<div id="hint">
+<div id="hint" data-en="<b>WASD</b> move · <b>Shift</b> run · <b>E</b> mine / shop · <b>Wheel</b> zoom · <b>Z X</b> rotate camera">
   <b>WASD</b> 移動　·　<b>Shift</b> 跑步　·　<b>E</b> 開採／商店　·　<b>滾輪</b> 遠近　·　<b>Z X</b> 轉鏡頭
 </div>
+
+<script>L.applyDom();</script>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.137.5/build/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.137.5/examples/js/loaders/GLTFLoader.js"></script>
@@ -843,14 +848,14 @@ function drawMinimap() {
 /* 開跑 */
 requestAnimationFrame(tick);
 </script>
-<script src="polish.js"></script>
-<script src="mining.js?v=text-trim-20261012"></script>
-<script src="mobile.js?v=text-trim-20261012"></script>
-<script src="look.js?v=text-trim-20261012"></script>
-<script src="camp.js?v=text-trim-20261012"></script>
+<script src="polish.js?v=en-20261117"></script>
+<script src="mining.js?v=en-20261117"></script>
+<script src="mobile.js?v=en-20261117"></script>
+<script src="look.js?v=en-20261117"></script>
+<script src="camp.js?v=en-20261117"></script>
 <script src="quality-pass.js"></script>
-<script src="detail-pass.js?v=text-trim-20261012"></script>
-<script src="audio.js?v=text-trim-20261012"></script>
-<script src="info.js"></script>
+<script src="detail-pass.js?v=en-20261117"></script>
+<script src="audio.js?v=en-20261117"></script>
+<script src="info.js?v=en-20261117"></script>
 </body>
 </html>

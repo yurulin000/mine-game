@@ -17,11 +17,11 @@
   const button = document.createElement('button');
   button.id = 'bgmToggle';
   button.type = 'button';
-  button.setAttribute('aria-label', '背景音樂開關');
+  button.setAttribute('aria-label', L('背景音樂開關', 'Toggle music'));
   button.style.cssText = 'background:#24354d;color:#ffe0ad;border:1px solid #65738a;border-radius:6px;padding:6px 10px;cursor:pointer;white-space:nowrap';
 
   function updateButton() {
-    button.textContent = muted ? '音樂：關' : '音樂：開';
+    button.textContent = muted ? L('音樂：關', 'Music: Off') : L('音樂：開', 'Music: On');
     button.setAttribute('aria-pressed', String(!muted));
   }
 
@@ -94,14 +94,27 @@
   const sfxButton = document.createElement('button');
   sfxButton.id = 'sfxToggle';
   sfxButton.type = 'button';
-  sfxButton.setAttribute('aria-label', '遊戲音效開關');
+  sfxButton.setAttribute('aria-label', L('遊戲音效開關', 'Toggle sound effects'));
   sfxButton.style.cssText = button.style.cssText;
   function updateSfxButton() {
-    sfxButton.textContent = sfxMuted ? '音效：關' : '音效：開';
+    sfxButton.textContent = sfxMuted ? L('音效：關', 'SFX: Off') : L('音效：開', 'SFX: On');
     sfxButton.setAttribute('aria-pressed', String(!sfxMuted));
   }
   if (panel) panel.insertBefore(sfxButton, button.nextSibling);
   updateSfxButton();
+
+  /* 語言切換：中文 ⇄ English（切換後重新載入） */
+  const langButton = document.createElement('button');
+  langButton.id = 'langToggle';
+  langButton.type = 'button';
+  langButton.style.cssText = button.style.cssText;
+  langButton.textContent = L('English', '中文');
+  langButton.setAttribute('aria-label', L('切換成英文', 'Switch to Chinese'));
+  langButton.addEventListener('click', (event) => {
+    event.stopPropagation();
+    L.set(L.isEn ? 'zh' : 'en');
+  });
+  if (panel) panel.insertBefore(langButton, sfxButton.nextSibling);
 
   function unlockSfx() {
     if (sfxUnlocked) return;       // 只需要解鎖一次

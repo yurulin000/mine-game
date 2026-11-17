@@ -90,7 +90,7 @@ atmosphere.style.display='none';
 document.body.appendChild(atmosphere);
 for(const id of ['title','info','mapbox','panel','hint'])document.getElementById(id).style.zIndex=3;
 
-const bridgeButton=document.createElement('button');bridgeButton.textContent='木橋特寫';
+const bridgeButton=document.createElement('button');bridgeButton.textContent=L('木橋特寫','Bridge close-up');
 bridgeButton.style.cssText='background:#24354d;color:#ffe0ad;border:1px solid #65738a;border-radius:6px;padding:6px 10px;cursor:pointer;margin-right:6px';
 document.getElementById('panel').prepend(bridgeButton);
 bridgeButton.onclick=()=>{player.position.set(-7,0,1);G.focus.x=-7;G.focus.z=1;G.vel.x=G.vel.z=0;G.overview=false;G.camDist=1.05;};

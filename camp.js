@@ -302,17 +302,19 @@ function sleep() {
   G.vel.x = G.vel.z = 0;
   G.moveDir = null;
 
-  msg.innerHTML = '鑽進帳篷，聽著篝火劈啪作響……';
+  msg.innerHTML = L('鑽進帳篷，聽著篝火劈啪作響……', 'You crawl into the tent as the campfire crackles…');
   fx.classList.add('on');
 
   setTimeout(() => {                         // 畫面全黑的時候偷偷換掉礦石
     MINING.refreshOres();
-    msg.innerHTML = '天亮了<br><span style="font-size:12px;color:#9a9384">礦坑裡長出了一批新的礦石</span>';
+    msg.innerHTML = L('天亮了', 'Morning!') + '<br><span style="font-size:12px;color:#9a9384">' +
+      L('礦坑裡長出了一批新的礦石', 'A fresh batch of ore has grown in the mine') + '</span>';
   }, 1500);
   setTimeout(() => fx.classList.remove('on'), 3000);
   setTimeout(() => {
     P.sleeping = false;
-    MINING.toast('睡飽了！礦坑長出了 ' + MINING.ores.length + ' 顆新礦石', '#c6d1ff');
+    MINING.toast(L('睡飽了！礦坑長出了 ' + MINING.ores.length + ' 顆新礦石',
+      'Well rested! ' + MINING.ores.length + ' new ores have grown'), '#c6d1ff');
   }, 3700);
 }
 
